@@ -4,10 +4,9 @@ function capturarEntradas() {
   const consumo = parseFloat(prompt("Digite o consumo médio do veículo (km por litro):"));
   const precoCombustivel = parseFloat(prompt("Digite o preço do combustível (por litro):"));
 
-  // Verificar se as entradas são válidas usando operador OR e ternário
   return (isNaN(distancia) || isNaN(consumo) || isNaN(precoCombustivel)) 
     ? (alert("Por favor, insira valores numéricos válidos."), null)
-    : { distancia, consumo, precoCombustivel }; // Usando desestruturação direta para retornar o objeto
+    : { distancia, consumo, precoCombustivel };
 }
 
 // Função para calcular o gasto total de combustível
@@ -18,24 +17,19 @@ function calcularGastoTotal({ distancia, consumo, precoCombustivel }) {
 
 // Função principal para executar o simulador
 function simuladorViagem() {
-  // Capturar as entradas do usuário
   const entradas = capturarEntradas();
 
-  // Se as entradas forem válidas, realizar o cálculo
-  entradas && (() => { // Usando operador AND para validar e continuar a execução
+  entradas && (() => {
     const gastoTotal = calcularGastoTotal(entradas);
-    
-    // Exibir o resultado com desestruturação e spread no console.log
-    console.log(...[
-      `Distância da viagem: ${entradas.distancia} km`,
-      `Consumo do veículo: ${entradas.consumo} km/l`,
-      `Preço do combustível: R$ ${entradas.precoCombustivel} por litro`,
-      `Gasto total com combustível: R$ ${gastoTotal.toFixed(2)}`
-    ]);
-    
-    alert(`O gasto total com combustível será de R$ ${gastoTotal.toFixed(2)}`);
+    const resultadoDiv = document.getElementById('resultado');
+    resultadoDiv.innerHTML = `
+      <p>Distância da viagem: ${entradas.distancia} km</p>
+      <p>Consumo do veículo: ${entradas.consumo} km/l</p>
+      <p>Preço do combustível: R$ ${entradas.precoCombustivel} por litro</p>
+      <p><strong>Gasto total com combustível: R$ ${gastoTotal.toFixed(2)}</strong></p>
+    `;
   })();
 }
 
-simuladorViagem();
-    
+// Adicionando evento ao botão
+document.getElementById('iniciarSimulador').addEventListener('click', simuladorViagem);
